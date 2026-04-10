@@ -48,6 +48,5 @@ opt.timeoutlen = 300 -- time to wait for a key sequence
 opt.clipboard = "unnamedplus"
 
 -- disable cursor-styling
-opt.guicursor = ""
 opt.cmdheight = 0
 opt.laststatus = 3
