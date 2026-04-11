@@ -1,5 +1,6 @@
 local g = vim.g
 local opt = vim.opt
+local diagnostic = vim.diagnostic
 
 -- Leader keys (must be set before lazy)
 g.mapleader = " "
@@ -47,6 +48,18 @@ opt.timeoutlen = 300 -- time to wait for a key sequence
 -- requires win32yank.exe on Windows (installed automatically with some setups)
 opt.clipboard = "unnamedplus"
 
--- disable cursor-styling
+-- Diagnostics
+diagnostic.config({
+	signs = {
+		text = {
+			[diagnostic.severity.ERROR] = "\u{f057}",
+			[diagnostic.severity.WARN] = "\u{f071}",
+			[diagnostic.severity.INFO] = "\u{f05a}",
+			[diagnostic.severity.HINT] = "\u{f0eb}",
+		},
+	},
+})
+
+-- Statusline & command bar
 opt.cmdheight = 0
 opt.laststatus = 3
