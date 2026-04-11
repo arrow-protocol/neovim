@@ -1,9 +1,6 @@
 local g = vim.g
 local opt = vim.opt
 local diagnostic = vim.diagnostic
-local filetype = vim.filetype
-
-local get_option = filetype.get_option
 
 -- Leader keys (must be set before lazy)
 g.mapleader = " "
@@ -67,8 +64,3 @@ diagnostic.config({
 	},
 })
 
--- Commenting
-filetype.get_option = function(filetype, option)
-	return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
-		or get_option(filetype, option)
-end
