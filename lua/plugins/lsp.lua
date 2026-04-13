@@ -2,10 +2,11 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{
-			"williamboman/mason.nvim",
-			config = true,
+			"mason-org/mason.nvim",
+			opts = {},
 		},
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -25,18 +26,25 @@ return {
 			end,
 		})
 
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
+			callback = function(args)
+				if vim.bo[args.buf].filetype:match("javascript") or vim.bo[args.buf].filetype:match("typescript") then
+					vim.cmd("silent! EslintFixAll")
+				end
+			end,
+		})
 
-		require("mason").setup()
+		vim.lsp.config("*", {
+			capabilities = require("cmp_nvim_lsp").default_capabilities(),
+		})
+
 		require("mason-lspconfig").setup({
-			ensure_installed = { "ts_ls", "lua_ls" },
-			handlers = {
-				function(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-					})
-				end,
-			},
+			ensure_installed = { "ts_ls", "lua_ls", "eslint" },
+		})
+
+		require("mason-tool-installer").setup({
+			ensure_installed = { "stylua", "prettierd" },
 		})
 	end,
 }
