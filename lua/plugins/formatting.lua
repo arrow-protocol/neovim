@@ -5,14 +5,14 @@ return {
 		require("conform").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
-				javascript = { "prettierd" },
-				javascriptreact = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
+				javascript = { "prettierd", "eslint_d" },
+				javascriptreact = { "prettierd", "eslint_d" },
+				typescript = { "prettierd", "eslint_d" },
+				typescriptreact = { "prettierd", "eslint_d" },
 				css = { "prettierd" },
 				json = { "prettierd" },
 			},
-			format_on_save = { timeout_ms = 500, lsp_fallback = "fallback" },
+			format_on_save = { timeout_ms = 3000, lsp_fallback = "fallback" },
 		})
 	end,
 }

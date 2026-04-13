@@ -26,15 +26,6 @@ return {
 			end,
 		})
 
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
-			callback = function(args)
-				if vim.bo[args.buf].filetype:match("javascript") or vim.bo[args.buf].filetype:match("typescript") then
-					vim.cmd("silent! EslintFixAll")
-				end
-			end,
-		})
-
 		vim.lsp.config("*", {
 			capabilities = require("cmp_nvim_lsp").default_capabilities(),
 		})
@@ -44,7 +35,7 @@ return {
 		})
 
 		require("mason-tool-installer").setup({
-			ensure_installed = { "stylua", "prettierd" },
+			ensure_installed = { "stylua", "prettierd", "eslint_d" },
 		})
 	end,
 }
