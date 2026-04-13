@@ -1,11 +1,40 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = { "javascript", "typescript", "jsx", "tsx", "json", "html", "css", "lua" },
-		auto_install = true,
-		highlight = {
-			enable = true,
-		},
-	},
+	config = function()
+		require("nvim-treesitter")
+			.install({
+				-- core
+				"lua",
+				-- web
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"tsx",
+				-- data/config
+				"json",
+				-- docs
+				"markdown",
+				"markdown_inline",
+			})
+			:wait(300000)
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = {
+				"lua",
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"tsx",
+				"json",
+				"markdown",
+			},
+			callback = function()
+				vim.treesitter.start()
+			end,
+		})
+	end,
 }
