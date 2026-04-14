@@ -49,6 +49,7 @@ opt.timeoutlen = 300 -- time to wait for a key sequence
 opt.clipboard = "unnamedplus"
 
 -- Statusline & command bar
+opt.cmdheight = 0
 opt.laststatus = 3
 
 -- Diagnostics
