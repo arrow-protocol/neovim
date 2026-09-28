@@ -14,6 +14,9 @@ return {
 				},
 			},
 		},
+		notifier = {
+			enabled = true,
+		},
 		words = {
 			enabled = true,
 		},
@@ -83,6 +86,13 @@ return {
 				Snacks.words.jump(-vim.v.count1)
 			end,
 			desc = "Prev reference",
+		},
+		{
+			"<leader>n",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification history",
 		},
 	},
 }
