@@ -24,7 +24,6 @@ opt.smartcase = true -- ...unless you type a capital letter
 opt.hlsearch = false -- don't keep highlights after search
 
 -- UI
-opt.termguicolors = true
 opt.cursorline = true
 opt.signcolumn = "yes" -- always show sign column (prevents layout shift)
 opt.scrolloff = 10
@@ -32,24 +31,16 @@ opt.splitright = true -- vertical splits open to the right
 opt.splitbelow = true -- horizontal splits open below
 o.winborder = "rounded"
 
-opt.mousemoveevent = true
-
 -- Files
 opt.swapfile = false
 opt.undofile = true
-opt.fileencoding = "utf-8"
 
 -- Performance
 opt.updatetime = 250 -- faster CursorHold events (used by LSP)
 opt.timeoutlen = 300 -- time to wait for a key sequence
 
--- Clipboard: use system clipboard
--- requires win32yank.exe on Windows (installed automatically with some setups)
-opt.clipboard = "unnamedplus"
-
 -- Statusline & command bar
 opt.cmdheight = 0
-opt.laststatus = 3
 
 -- Diagnostics
 diagnostic.config({
@@ -58,9 +49,6 @@ diagnostic.config({
 		current_line = true,
 	},
 	severity_sort = true,
-	float = {
-		border = "rounded",
-	},
 	signs = {
 		text = {
 			[diagnostic.severity.ERROR] = "\u{f057}",
@@ -70,3 +58,8 @@ diagnostic.config({
 		},
 	},
 })
+
+-- Clipboard: use system clipboard
+vim.schedule(function()
+	opt.clipboard = "unnamedplus"
+end)

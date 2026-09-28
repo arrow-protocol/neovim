@@ -15,6 +15,9 @@ return {
 				},
 			},
 		},
+		lazygit = {
+			enabled = true,
+		},
 		notifier = {
 			enabled = true,
 		},
@@ -122,6 +125,42 @@ return {
 				Snacks.picker.help()
 			end,
 			desc = "Help tags",
+		},
+		{
+			"<leader>fs",
+			function()
+				Snacks.picker.lsp_symbols()
+			end,
+			desc = "Document symbols",
+		},
+		{
+			"<leader>gg",
+			function()
+				Snacks.lazygit()
+			end,
+			desc = "Lazygit",
+		},
+		{
+			"<leader>gl",
+			function()
+				Snacks.lazygit.log()
+			end,
+			desc = "Git log",
+		},
+		{
+			"<leader>gf",
+			function()
+				Snacks.lazygit.log_file()
+			end,
+			desc = "Git log (current file)",
+		},
+		{
+			"<leader>gB",
+			function()
+				Snacks.gitbrowse()
+			end,
+			mode = { "n", "x" },
+			desc = "Open in browser",
 		},
 	},
 }

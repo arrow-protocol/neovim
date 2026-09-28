@@ -3,7 +3,11 @@ return {
 	dependencies = {
 		{
 			"mason-org/mason.nvim",
-			opts = {},
+			opts = {
+				ui = {
+					backdrop = 100,
+				},
+			},
 		},
 		"mason-org/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -16,7 +20,6 @@ return {
 					vim.keymap.set("n", lhs, rhs, { buffer = ev.buf, desc = desc })
 				end
 				map("gd", vim.lsp.buf.definition, "Go to definition")
-				map("K", vim.lsp.buf.hover, "Hover")
 				map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
 			end,
 		})
@@ -25,12 +28,27 @@ return {
 			capabilities = require("blink.cmp").get_lsp_capabilities(),
 		})
 
+		local base_on_attach = vim.lsp.config.eslint.on_attach
+
+		vim.lsp.config("eslint", {
+			on_attach = function(client, bufnr)
+				if base_on_attach then
+					base_on_attach(client, bufnr)
+				end
+
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = bufnr,
+					command = "LspEslintFixAll",
+				})
+			end,
+		})
+
 		require("mason-lspconfig").setup({
 			ensure_installed = { "ts_ls", "lua_ls", "eslint" },
 		})
 
 		require("mason-tool-installer").setup({
-			ensure_installed = { "stylua", "prettierd", "eslint_d" },
+			ensure_installed = { "stylua", "prettierd" },
 		})
 	end,
 }
