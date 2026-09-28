@@ -11,11 +11,18 @@ return {
 				-- web
 				"html",
 				"css",
+				"scss",
 				"javascript",
 				"typescript",
 				"tsx",
 				-- data/config
 				"json",
+				"yaml",
+				-- shell
+				"bash",
+				-- git
+				"gitcommit",
+				"diff",
 				-- docs
 				"markdown",
 				"markdown_inline",

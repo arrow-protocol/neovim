@@ -40,13 +40,7 @@ return {
 						desc = "Config",
 						action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
 					},
-					{
-						icon = "\u{f04b2} ",
-						key = "L",
-						desc = "Lazy",
-						action = ":Lazy",
-						enabled = package.loaded.lazy ~= nil,
-					},
+					{ icon = "\u{f04b2} ", key = "L", desc = "Lazy", action = ":Lazy" },
 					{ icon = "\u{f08b} ", key = "q", desc = "Quit", action = ":qa" },
 				},
 				header = table.concat({
@@ -161,6 +155,35 @@ return {
 			end,
 			mode = { "n", "x" },
 			desc = "Open in browser",
+		},
+		{
+			"gd",
+			function()
+				Snacks.picker.lsp_definitions()
+			end,
+			desc = "Go to definition",
+		},
+		{
+			"grr",
+			function()
+				Snacks.picker.lsp_references()
+			end,
+			nowait = true,
+			desc = "References",
+		},
+		{
+			"gri",
+			function()
+				Snacks.picker.lsp_implementations()
+			end,
+			desc = "Implementations",
+		},
+		{
+			"gy",
+			function()
+				Snacks.picker.lsp_type_definitions()
+			end,
+			desc = "Type definition",
 		},
 	},
 }

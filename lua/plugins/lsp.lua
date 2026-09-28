@@ -19,7 +19,6 @@ return {
 				local function map(lhs, rhs, desc)
 					vim.keymap.set("n", lhs, rhs, { buffer = ev.buf, desc = desc })
 				end
-				map("gd", vim.lsp.buf.definition, "Go to definition")
 				map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
 			end,
 		})
