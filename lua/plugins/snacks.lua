@@ -1,6 +1,50 @@
+local glyphs = {
+	["0"] = { "█████", "█   █", "█   █", "█   █", "█████" },
+	["1"] = { "    █", "    █", "    █", "    █", "    █" },
+	["2"] = { "█████", "    █", "█████", "█    ", "█████" },
+	["3"] = { "█████", "    █", "█████", "    █", "█████" },
+	["4"] = { "█   █", "█   █", "█████", "    █", "    █" },
+	["5"] = { "█████", "█    ", "█████", "    █", "█████" },
+	["6"] = { "█████", "█    ", "█████", "█   █", "█████" },
+	["7"] = { "█████", "    █", "    █", "    █", "    █" },
+	["8"] = { "█████", "█   █", "█████", "█   █", "█████" },
+	["9"] = { "█████", "█   █", "█████", "    █", "█████" },
+	[":"] = { " ", "█", " ", "█", " " },
+}
+
+local function big_clock()
+	local rows = {}
+	for i = 1, 5 do
+		local row = {}
+		for ch in os.date("%H:%M:%S"):gmatch(".") do
+			table.insert(row, glyphs[ch][i])
+		end
+		rows[i] = table.concat(row, "  ")
+	end
+	return table.concat(rows, "\n")
+end
+
 return {
 	"folke/snacks.nvim",
 	lazy = false,
+	init = function()
+		local timer
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "SnacksDashboardOpened",
+			callback = function()
+				timer = timer or vim.uv.new_timer()
+				timer:start(1000, 1000, vim.schedule_wrap(Snacks.dashboard.update))
+			end,
+		})
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "SnacksDashboardClosed",
+			callback = function()
+				if timer then
+					timer:stop()
+				end
+			end,
+		})
+	end,
 	opts = {
 		explorer = {
 			enabled = true,
@@ -28,37 +72,10 @@ return {
 			enabled = true,
 		},
 		dashboard = {
-			row = 1,
-			preset = {
-				keys = {
-					{ icon = "\u{f0349} ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-					{ icon = "\u{f15c} ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-					{ icon = "\u{f0c5} ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-					{
-						icon = "\u{f013} ",
-						key = "c",
-						desc = "Config",
-						action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
-					},
-					{ icon = "\u{f04b2} ", key = "L", desc = "Lazy", action = ":Lazy" },
-					{ icon = "\u{f08b} ", key = "q", desc = "Quit", action = ":qa" },
-				},
-				header = table.concat({
-					" __________________________________________________ ",
-					"< Weeks of coding can save you hours of planning. > ",
-					" -------------------------------------------------- ",
-					"                \\   ^__^                            ",
-					"                 \\  (oo)\\_______                    ",
-					"                    (__)\\       )\\/\\                ",
-					"                        ||----w |                    ",
-					"                        ||     ||                    ",
-				}, "\n"),
-			},
 			sections = {
-				{ section = "header" },
-				{ section = "keys", gap = 1, padding = 1 },
-				{ icon = "\u{f0c5} ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-				{ icon = "\u{f07b} ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+				function()
+					return { text = { { big_clock(), hl = "SnacksDashboardHeader" } }, align = "center", padding = 2 }
+				end,
 				{ section = "startup" },
 			},
 		},
@@ -112,6 +129,13 @@ return {
 				Snacks.picker.buffers()
 			end,
 			desc = "Find buffers",
+		},
+		{
+			"<leader>fr",
+			function()
+				Snacks.picker.recent()
+			end,
+			desc = "Recent files",
 		},
 		{
 			"<leader>fh",
