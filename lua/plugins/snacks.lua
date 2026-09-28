@@ -8,6 +8,7 @@ return {
 			trash = true, -- delete to the system trash
 		},
 		picker = {
+			enabled = true, -- also use the picker for vim.ui.select (code actions, etc.)
 			sources = {
 				explorer = {
 					hidden = true, -- show dotfiles
@@ -27,14 +28,14 @@ return {
 			row = 1,
 			preset = {
 				keys = {
-					{ icon = "\u{f0349} ", key = "f", desc = "Find File", action = ":Telescope find_files" },
-					{ icon = "\u{f15c} ", key = "g", desc = "Find Text", action = ":Telescope live_grep" },
-					{ icon = "\u{f0c5} ", key = "r", desc = "Recent Files", action = ":Telescope oldfiles" },
+					{ icon = "\u{f0349} ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+					{ icon = "\u{f15c} ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+					{ icon = "\u{f0c5} ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
 					{
 						icon = "\u{f013} ",
 						key = "c",
 						desc = "Config",
-						action = ":lua require('telescope.builtin').find_files({ cwd = vim.fn.stdpath('config') })",
+						action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
 					},
 					{
 						icon = "\u{f04b2} ",
@@ -93,6 +94,34 @@ return {
 				Snacks.notifier.show_history()
 			end,
 			desc = "Notification history",
+		},
+		{
+			"<leader>ff",
+			function()
+				Snacks.picker.files()
+			end,
+			desc = "Find files",
+		},
+		{
+			"<leader>fg",
+			function()
+				Snacks.picker.grep()
+			end,
+			desc = "Live grep",
+		},
+		{
+			"<leader>fb",
+			function()
+				Snacks.picker.buffers()
+			end,
+			desc = "Find buffers",
+		},
+		{
+			"<leader>fh",
+			function()
+				Snacks.picker.help()
+			end,
+			desc = "Help tags",
 		},
 	},
 }
