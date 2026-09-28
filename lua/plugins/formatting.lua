@@ -12,7 +12,7 @@ return {
 				css = { "prettierd" },
 				json = { "prettierd" },
 			},
-			format_on_save = { timeout_ms = 3000, lsp_fallback = "fallback" },
+			format_on_save = { timeout_ms = 3000, lsp_format = "fallback" },
 		})
 	end,
 }

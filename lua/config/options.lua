@@ -20,7 +20,6 @@ opt.smartindent = true
 -- Search
 opt.ignorecase = true -- case-insensitive search...
 opt.smartcase = true -- ...unless you type a capital letter
-opt.incsearch = true -- show matches as you type
 opt.hlsearch = false -- don't keep highlights after search
 
 -- UI
@@ -36,9 +35,7 @@ opt.mousemoveevent = true
 -- Files
 opt.swapfile = false
 opt.undofile = true
-opt.encoding = "utf-8"
 opt.fileencoding = "utf-8"
-opt.hidden = true -- allow switching buffers without saving
 
 -- Performance
 opt.updatetime = 250 -- faster CursorHold events (used by LSP)
@@ -54,6 +51,14 @@ opt.laststatus = 3
 
 -- Diagnostics
 diagnostic.config({
+	virtual_text = {
+		spacing = 2,
+		current_line = true,
+	},
+	severity_sort = true,
+	float = {
+		border = "rounded",
+	},
 	signs = {
 		text = {
 			[diagnostic.severity.ERROR] = "\u{f057}",
