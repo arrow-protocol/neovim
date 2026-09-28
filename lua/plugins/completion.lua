@@ -15,6 +15,10 @@ return {
 			}),
 			sources = cmp.config.sources({
 				{
+					name = "lazydev",
+					group_index = 0, -- skip loading LuaLS completions
+				},
+				{
 					name = "nvim_lsp",
 				},
 				{
