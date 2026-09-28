@@ -12,12 +12,12 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				local opts = {
-					buffer = ev.buf,
-				}
-				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-				vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+				local function map(lhs, rhs, desc)
+					vim.keymap.set("n", lhs, rhs, { buffer = ev.buf, desc = desc })
+				end
+				map("gd", vim.lsp.buf.definition, "Go to definition")
+				map("K", vim.lsp.buf.hover, "Hover")
+				map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
 			end,
 		})
 
