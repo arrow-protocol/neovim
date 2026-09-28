@@ -1,33 +1,42 @@
 return {
-	"hrsh7th/nvim-cmp",
-	dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path" },
-	config = function()
-		local cmp = require("cmp")
-		cmp.setup({
-			mapping = cmp.mapping.preset.insert({
-				["<C-Space>"] = cmp.mapping.complete(),
-				["<C-e>"] = cmp.mapping.abort(),
-				["<CR>"] = cmp.mapping.confirm({
-					select = true,
-				}),
-				["<Tab>"] = cmp.mapping.select_next_item(),
-				["<S-Tab>"] = cmp.mapping.select_prev_item(),
-			}),
-			sources = cmp.config.sources({
-				{
-					name = "lazydev",
-					group_index = 0, -- skip loading LuaLS completions
+	"saghen/blink.cmp",
+	version = "1.*", -- use a release tag to download the prebuilt fuzzy matcher
+	event = { "InsertEnter", "CmdlineEnter" },
+	opts = {
+		keymap = {
+			preset = "enter",
+			["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+			["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+		},
+		appearance = {
+			nerd_font_variant = "mono",
+		},
+		completion = {
+			menu = {
+				draw = {
+					treesitter = { "lsp" }, -- highlight LSP labels with treesitter
 				},
-				{
-					name = "nvim_lsp",
+			},
+			documentation = {
+				auto_show = true,
+				auto_show_delay_ms = 200,
+			},
+			ghost_text = {
+				enabled = true,
+			},
+		},
+		signature = {
+			enabled = true,
+		},
+		sources = {
+			default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+			providers = {
+				lazydev = {
+					name = "LazyDev",
+					module = "lazydev.integrations.blink",
+					score_offset = 100, -- show lazydev completions first
 				},
-				{
-					name = "buffer",
-				},
-				{
-					name = "path",
-				},
-			}),
-		})
-	end,
+			},
+		},
+	},
 }
