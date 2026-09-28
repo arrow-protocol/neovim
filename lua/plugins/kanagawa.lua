@@ -1,7 +1,20 @@
 return {
 	"rebelot/kanagawa.nvim",
-	priority = 1000,
+	lazy = true,
 	config = function()
-		vim.cmd.colorscheme("kanagawa")
+		require("kanagawa").setup({
+			colors = {
+				theme = {
+					all = {
+						ui = {
+							float = {
+								bg_border = "none",
+								bg = "none",
+							},
+						},
+					},
+				},
+			},
+		})
 	end,
 }

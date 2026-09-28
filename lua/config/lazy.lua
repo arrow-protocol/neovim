@@ -8,7 +8,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins", {
 	-- colorscheme that will be used when installing plugins.
 	install = {
-		colorscheme = { "kanagawa" },
+		colorscheme = { "tokyonight" },
 	},
 	-- automatically check for plugin updates
 	checker = {

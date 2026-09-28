@@ -1,4 +1,5 @@
 local g = vim.g
+local o = vim.o
 local opt = vim.opt
 local diagnostic = vim.diagnostic
 
@@ -29,6 +30,7 @@ opt.signcolumn = "yes" -- always show sign column (prevents layout shift)
 opt.scrolloff = 10
 opt.splitright = true -- vertical splits open to the right
 opt.splitbelow = true -- horizontal splits open below
+o.winborder = "rounded"
 
 opt.mousemoveevent = true
 
