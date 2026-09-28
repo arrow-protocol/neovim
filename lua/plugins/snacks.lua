@@ -2,6 +2,18 @@ return {
 	"folke/snacks.nvim",
 	lazy = false,
 	opts = {
+		explorer = {
+			enabled = true,
+			replace_netrw = true, -- open the explorer instead of netrw for directories
+			trash = true, -- delete to the system trash
+		},
+		picker = {
+			sources = {
+				explorer = {
+					hidden = true, -- show dotfiles
+				},
+			},
+		},
 		indent = {
 			enabled = true,
 		},
@@ -45,6 +57,15 @@ return {
 				{ icon = "\u{f07b} ", title = "Projects", section = "projects", indent = 2, padding = 1 },
 				{ section = "startup" },
 			},
+		},
+	},
+	keys = {
+		{
+			"<leader>e",
+			function()
+				Snacks.explorer()
+			end,
+			desc = "File explorer",
 		},
 	},
 }
