@@ -17,7 +17,6 @@ return {
 				update_n_lines = "gsn",
 			},
 		})
-		require("mini.cursorword").setup()
 		require("mini.cmdline").setup()
 		require("mini.comment").setup({
 			options = {
